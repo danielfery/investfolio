@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class StockService {
+    /*name of Collection in Firestore*/
     private static final String COLLECTION_NAME = "Stock";
 
     public String saveStock(Stock stock) throws ExecutionException, InterruptedException {
