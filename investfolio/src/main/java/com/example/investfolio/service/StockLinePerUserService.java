@@ -5,23 +5,48 @@ import com.example.investfolio.entity.StockLinePerUser;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import yahoofinance.Stock;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @Service
-public class StockService {
+public class StockLinePerUserService {
     /*name of Collection in Firestore*/
+
+
+
+
     private static final String COLLECTION_NAME = "User";
     public static final String SUB_COLLECTION_NAME = "UserStocks";
 
+    public StockLinePerUserService() {
+    }
 
-    public String saveStockLinePerUser(StockLinePerUser stockLinePerUser, String userId) throws ExecutionException, InterruptedException {
+
+    public String saveStockLinePerUser(String userId, Stock generalStock) throws ExecutionException, InterruptedException, IOException {
 
         Firestore dbFirestore = FirestoreClient.getFirestore();
 
+        //Todo: Prüfen, ob ticker valide ist
+
+        //wenn der User die aktie schon hat, nichts machen
+        //Todo: anderen http statuscode zurückgeben
+        if (stockLinePerUserAlreadyExists(userId, generalStock.getSymbol())) {
+            return "User hat Aktie bereits";
+        }
+
+
+        StockLinePerUser stockLinePerUser = new StockLinePerUser(generalStock.getSymbol(), generalStock.getName(), /*java.time.LocalDateTime.now(),*/ userId, generalStock.getQuote(true).getPrice().doubleValue(), generalStock.getQuote(true).getPrice().doubleValue());
+
+
+        //speichern der StockLinePerUser
         ApiFuture<WriteResult> collectionApiFuture = dbFirestore.collection(COLLECTION_NAME).document(userId).collection(SUB_COLLECTION_NAME).document(userId + stockLinePerUser.getTicker()).set(stockLinePerUser);
 
         return collectionApiFuture.get().getUpdateTime().toString();
@@ -53,5 +78,15 @@ public class StockService {
 
         // asynchronously delete a document
         ApiFuture<WriteResult> writeResult = dbFirestore.collection(COLLECTION_NAME).document(userId).collection(SUB_COLLECTION_NAME).document(userId + ticker).delete();
+    }
+
+    private boolean stockLinePerUserAlreadyExists(String userId, String ticker) throws ExecutionException, InterruptedException {
+        for (StockLinePerUser s : getStocks(userId)){
+            if (s.getTicker().equals(ticker)){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

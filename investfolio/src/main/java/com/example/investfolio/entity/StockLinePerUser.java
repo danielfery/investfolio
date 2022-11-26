@@ -3,66 +3,39 @@ package com.example.investfolio.entity;
 import java.time.LocalDateTime;
 
 public class StockLinePerUser {
+    private String ticker;
+    private String companyName;
+    //private LocalDateTime boughtAtDateTime;
+    private String userId;
+    private double priceBuy;
+    private double currentPrice;
     public StockLinePerUser() {
     }
 
-    public StockLinePerUser(String ticker, LocalDateTime boughtAtDateTime, String companyName, String userId, int priceBuyCents, int currentPriceCents) {
+
+
+    public StockLinePerUser(String userId, String ticker) {
+        this.userId = userId;
         this.ticker = ticker;
-        this.boughtAtDateTime = boughtAtDateTime;
+
+    }
+
+    public StockLinePerUser(String ticker, String companyName, /*LocalDateTime boughtAtDateTime,*/ String userId, double priceBuy, double currentPrice) {
+        this.ticker = ticker;
         this.companyName = companyName;
+        //this.boughtAtDateTime = boughtAtDateTime;
         this.userId = userId;
-        this.priceBuyCents = priceBuyCents;
-        this.currentPriceCents = currentPriceCents;
+        this.priceBuy = priceBuy;
+        this.currentPrice = currentPrice;
     }
 
-    private String ticker;
-
-    public LocalDateTime getBoughtAtDateTime() {
-        return boughtAtDateTime;
+    public String getTicker() {
+        return ticker;
     }
 
-    public void setBoughtAtDateTime(LocalDateTime boughtAtDateTime) {
-        this.boughtAtDateTime = boughtAtDateTime;
-    }
-
-    private LocalDateTime boughtAtDateTime;
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public void setPriceBuyCents(int priceBuyCents) {
-        this.priceBuyCents = priceBuyCents;
-    }
-
-    public void setCurrentPriceCents(int currentPriceCents) {
-        this.currentPriceCents = currentPriceCents;
-    }
-
-    private String companyName;
-    private String userId;
-    private int priceBuyCents;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public int getPriceBuyCents() {
-        return priceBuyCents;
-    }
-
-    public int getCurrentPriceCents() {
-        return currentPriceCents;
-    }
-
-    private int currentPriceCents;
-   public StockLinePerUser(String userId, String ticker) {
-       this.userId = userId;
+    public void setTicker(String ticker) {
         this.ticker = ticker;
-
     }
-
-
 
     public String getCompanyName() {
         return companyName;
@@ -72,13 +45,37 @@ public class StockLinePerUser {
         this.companyName = companyName;
     }
 
-
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
+    /*
+    public LocalDateTime getBoughtAtDateTime() {
+        return boughtAtDateTime;
     }
 
-    public String getTicker() {
-        return ticker;
+    public void setBoughtAtDateTime(LocalDateTime boughtAtDateTime) {
+        this.boughtAtDateTime = boughtAtDateTime;
+    }
+*/
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public double getPriceBuy() {
+        return priceBuy;
+    }
+
+    public void setPriceBuy(double priceBuy) {
+        this.priceBuy = priceBuy;
+    }
+
+    public double getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public void setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
     }
 }
 

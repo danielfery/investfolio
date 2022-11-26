@@ -1,11 +1,15 @@
 package com.example.investfolio.controller;
 
 import com.example.investfolio.entity.StockLinePerUser;
-import com.example.investfolio.service.StockService;
+import com.example.investfolio.service.GeneralStockService;
+import com.example.investfolio.service.StockLinePerUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -13,29 +17,38 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping
 public class StockController {
 
+
     @Autowired
-    private StockService stockService;
+    private StockLinePerUserService stockLinePerUserService;
+
+
+
+    public StockController() throws ExecutionException, InterruptedException {
+    }
 
     @PostMapping("/createStock")
-    public ResponseEntity saveStock(String userId, String ticker) throws ExecutionException, InterruptedException {
+    public ResponseEntity saveStock(String userId, String ticker) throws ExecutionException, InterruptedException, IOException {
 
-        //Todo: Hier muss dann mithilfe der Yahoo-Finance-Api eine Abfrage der restlichen Daten erfolgen
-        //alternativ diese Logik im StockService einfügen
-        StockLinePerUser stockLinePerUserToCreate = new StockLinePerUser(userId, ticker);
-        stockService.saveStockLinePerUser(stockLinePerUserToCreate, userId);
 
-        return ResponseEntity.ok(stockLinePerUserToCreate);
+        //alternativ diese Logik im StockLinePerUserService einfügen
+        Stock generalStock = YahooFinance.get(ticker);
+        if (generalStock == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        stockLinePerUserService.saveStockLinePerUser(userId, generalStock);
+
+        return ResponseEntity.ok("Aktie angelegt.");
 
     }
 
     @GetMapping("/getStocks")
     public List<StockLinePerUser> getStocks(String userId) throws ExecutionException, InterruptedException {
-        return stockService.getStocks(userId);
+        return stockLinePerUserService.getStocks(userId);
     }
 
     @DeleteMapping("/deleteStock")
     public void deleteStock(String userId, String ticker){
-        stockService.deleteStock(userId, ticker);
+        stockLinePerUserService.deleteStock(userId, ticker);
     }
 
 
