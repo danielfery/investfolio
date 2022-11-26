@@ -43,7 +43,7 @@ public class StockLinePerUserService {
         }
 
 
-        StockLinePerUser stockLinePerUser = new StockLinePerUser(generalStock.getSymbol(), generalStock.getName(), /*java.time.LocalDateTime.now(),*/ userId, generalStock.getQuote(true).getPrice().doubleValue(), generalStock.getQuote(true).getPrice().doubleValue());
+        StockLinePerUser stockLinePerUser = new StockLinePerUser(generalStock.getSymbol(), generalStock.getName(), java.time.LocalDateTime.now().toString(), userId, generalStock.getQuote(true).getPrice().doubleValue(), generalStock.getQuote(true).getPrice().doubleValue());
 
 
         //speichern der StockLinePerUser

@@ -1,7 +1,6 @@
 package com.example.investfolio.controller;
 
 import com.example.investfolio.entity.StockLinePerUser;
-import com.example.investfolio.service.GeneralStockService;
 import com.example.investfolio.service.StockLinePerUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class StockLinePerUser {
     private String ticker;
     private String companyName;
-    //private LocalDateTime boughtAtDateTime;
+    private String boughtAtDateTime;
     private String userId;
     private double priceBuy;
     private double currentPrice;
@@ -20,7 +20,7 @@ public class StockLinePerUser {
 
     }
 
-    public StockLinePerUser(String ticker, String companyName, /*LocalDateTime boughtAtDateTime,*/ String userId, double priceBuy, double currentPrice) {
+    public StockLinePerUser(String ticker, String companyName, String boughtAtDateTime, String userId, double priceBuy, double currentPrice) {
         this.ticker = ticker;
         this.companyName = companyName;
         //this.boughtAtDateTime = boughtAtDateTime;
@@ -45,15 +45,15 @@ public class StockLinePerUser {
         this.companyName = companyName;
     }
 
-    /*
-    public LocalDateTime getBoughtAtDateTime() {
+
+    public String getBoughtAtDateTime() {
         return boughtAtDateTime;
     }
 
-    public void setBoughtAtDateTime(LocalDateTime boughtAtDateTime) {
+    public void setBoughtAtDateTime(String boughtAtDateTime) {
         this.boughtAtDateTime = boughtAtDateTime;
     }
-*/
+
     public String getUserId() {
         return userId;
     }
