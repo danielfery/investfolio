@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+//new branch Daniel
 @RestController
 @RequestMapping
 public class StockController {
