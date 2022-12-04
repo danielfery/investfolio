@@ -1,6 +1,7 @@
 package com.example.investfolio.controller;
 
 import com.example.investfolio.entity.StockLinePerUser;
+import com.example.investfolio.service.ProfileDataOfUserService;
 import com.example.investfolio.service.StockLinePerUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +14,15 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@RequestMapping
+@RequestMapping("api")
 public class StockController {
 
 
     @Autowired
     private StockLinePerUserService stockLinePerUserService;
 
-
+    @Autowired
+    private ProfileDataOfUserService profileDataOfUserService;
 
     public StockController() throws ExecutionException, InterruptedException {
     }
@@ -50,5 +52,16 @@ public class StockController {
         stockLinePerUserService.deleteStock(userId, ticker);
     }
 
+    @PostMapping("/createUser")
+    public ResponseEntity createUser(String userId, String eMail) throws ExecutionException, InterruptedException {
+        //TODO: Fall behandeln, wenn User schon existiert
+        return ResponseEntity.ok(profileDataOfUserService.createUser(userId, eMail));
+    }
 
+    //TODO: Fehlerbehandlung für diese Methode
+    @GetMapping("/getUser")
+    public ResponseEntity getUser(String userId) throws ExecutionException, InterruptedException {
+        //TODO: Fall behandeln, wenn User nicht existiert
+        return ResponseEntity.ok(profileDataOfUserService.getUser(userId));
+    }
 }
