@@ -15,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("api")
+@CrossOrigin("*")
 public class StockController {
 
 
