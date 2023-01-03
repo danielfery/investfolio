@@ -6,10 +6,12 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import yahoofinance.Stock;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +22,8 @@ import java.util.concurrent.ExecutionException;
 public class StockLinePerUserService {
     /*name of Collection in Firestore*/
 
-
+    @Autowired
+    private InternalStockPriceService internalStockPriceService;
 
 
     private static final String COLLECTION_NAME = "User";
@@ -43,7 +46,7 @@ public class StockLinePerUserService {
         }
 
 
-        StockLinePerUser stockLinePerUser = new StockLinePerUser(generalStock.getSymbol(), generalStock.getName(), java.time.LocalDateTime.now().toString(), userId, generalStock.getQuote(true).getPrice().doubleValue(), generalStock.getQuote(true).getPrice().doubleValue());
+        StockLinePerUser stockLinePerUser = new StockLinePerUser(generalStock.getSymbol(), generalStock.getName(), java.time.LocalDateTime.now().toString(), userId, internalStockPriceService.getCurrentPrice(generalStock.getSymbol()));
 
 
         //speichern der StockLinePerUser
@@ -57,7 +60,6 @@ public class StockLinePerUserService {
     public List<StockLinePerUser> getStocks(String userId) throws ExecutionException, InterruptedException {
 
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        CollectionReference mQuery = dbFirestore.collection(COLLECTION_NAME).document(userId).collection(SUB_COLLECTION_NAME);
 
         List<StockLinePerUser> returnStocks = new ArrayList<>();
         // asynchronously retrieve multiple documents
@@ -89,4 +91,7 @@ public class StockLinePerUserService {
 
         return false;
     }
+
+
+
 }

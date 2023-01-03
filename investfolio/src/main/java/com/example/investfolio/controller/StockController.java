@@ -1,6 +1,8 @@
 package com.example.investfolio.controller;
 
+import com.example.investfolio.entity.ReturnUserStockLine;
 import com.example.investfolio.entity.StockLinePerUser;
+import com.example.investfolio.service.InternalStockPriceService;
 import com.example.investfolio.service.ProfileDataOfUserService;
 import com.example.investfolio.service.StockLinePerUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -18,6 +21,8 @@ import java.util.concurrent.ExecutionException;
 @CrossOrigin("*")
 public class StockController {
 
+    @Autowired
+    private InternalStockPriceService internalStockPriceService;
 
     @Autowired
     private StockLinePerUserService stockLinePerUserService;
@@ -44,8 +49,14 @@ public class StockController {
     }
 
     @GetMapping("/getStocks")
-    public List<StockLinePerUser> getStocks(String userId) throws ExecutionException, InterruptedException {
-        return stockLinePerUserService.getStocks(userId);
+    public List<ReturnUserStockLine> getStocks(String userId) throws ExecutionException, InterruptedException, IOException {
+        LinkedList<ReturnUserStockLine> returnList = new LinkedList<>();
+        for (StockLinePerUser s : stockLinePerUserService.getStocks(userId)) {
+            returnList.add(new ReturnUserStockLine(s.getTicker(), s.getCompanyName(), s.getBoughtAtDateTime(), s.getUserId(), s.getPriceBuy(), internalStockPriceService.getCurrentPrice(s.getTicker())));
+        }
+
+
+        return returnList;
     }
 
     @DeleteMapping("/deleteStock")

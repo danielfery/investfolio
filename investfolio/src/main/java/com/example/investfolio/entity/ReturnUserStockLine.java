@@ -1,33 +1,31 @@
 package com.example.investfolio.entity;
 
-import java.time.LocalDateTime;
-
-//dient zum internen Abspeichern. Hier ist der aktuelle Preis NICHT enthalten.
-public class StockLinePerUser {
+//dient nur zum Ausgeben, weil hier zusätzlich der aktuelle Preis enthalten ist.
+public class ReturnUserStockLine {
     private String ticker;
     private String companyName;
     private String boughtAtDateTime;
     private String userId;
     private double priceBuy;
-
-    public StockLinePerUser() {
+    private double currentPrice;
+    public ReturnUserStockLine() {
     }
 
 
 
-    public StockLinePerUser(String userId, String ticker) {
+    public ReturnUserStockLine(String userId, String ticker) {
         this.userId = userId;
         this.ticker = ticker;
 
     }
 
-    public StockLinePerUser(String ticker, String companyName, String boughtAtDateTime, String userId, double priceBuy) {
+    public ReturnUserStockLine(String ticker, String companyName, String boughtAtDateTime, String userId, double priceBuy, double currentPrice) {
         this.ticker = ticker;
         this.companyName = companyName;
         //this.boughtAtDateTime = boughtAtDateTime;
         this.userId = userId;
         this.priceBuy = priceBuy;
-
+        this.currentPrice = currentPrice;
     }
 
     public String getTicker() {
@@ -71,6 +69,12 @@ public class StockLinePerUser {
         this.priceBuy = priceBuy;
     }
 
+    public double getCurrentPrice() {
+        return currentPrice;
+    }
 
+    public void setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
+    }
 }
 
