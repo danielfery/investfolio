@@ -4,6 +4,12 @@
     font-family: 'Work Sans', sans-serif;
     font-weight: 900;
     margin-bottom: 25px;
+    font-size: 8vw;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .subtitle {
@@ -12,13 +18,8 @@
     color: white;
     border: solid;
     background-color: black;
-}
-
-p {
-    font-size: 8vw;
     text-transform: uppercase;
     text-align: center;
-    line-height: 1;
     margin-left: 10%;
     margin-right: 10%;
 }

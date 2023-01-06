@@ -1,0 +1,14 @@
+
+.title {
+    color: white;
+}
+
+.card_margin {
+    margin-top: 20px;
+    margin-right: 10%;
+}
+
+.card_image {
+    max-width: 25px;
+    float: right;
+}
