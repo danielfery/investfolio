@@ -1,0 +1,36 @@
+
+.investfolio {
+    color: #fff;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 900;
+    margin-bottom: 25px;
+    font-size: 8vw;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.subtitle {
+    font-size: 30px;
+    font-weight: 600;
+    color: white;
+    border: solid;
+    background-color: black;
+    text-transform: uppercase;
+    text-align: center;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.fancy {
+/*    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 70%, rgba(0,0,0,1) 100%);*/
+    text-shadow: 2px 0 #fff, -2px 0 #000, 0 2px #000, 0 -2px #000,
+    1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;
+    background-size: 110% auto;
+    background-position: center;
+    color: transparent;
+    -webkit-background-clip: text;
+}
