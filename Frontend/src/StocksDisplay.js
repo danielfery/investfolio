@@ -1,10 +1,14 @@
 import AddStock from "./AddStock";
+import "./StocksDisplay.css"
+import {useNavigate} from "react-router-dom";
 
 function StocksDisplay({stocks, deleteStock}) {
 
-    const test = (value) => {
-        return (value < 0 ? <td key={"priceBuy"} style={{color: "red"}}>{value} %</td> :
-            <td key={"priceBuy"} style={{color: "green"}}>{value} %</td>)
+    const navigate = useNavigate();
+
+    const yieldInPercent = (value) => {
+        return (value < 0 ? <td key={"priceBuy"} style={{color: "red"}}>{Math.round(value * 100) / 100} %</td> :
+            <td key={"priceBuy"} style={{color: "green"}}>{Math.round(value * 100) / 100} %</td>)
     }
 
     return (<div className="container">
@@ -21,6 +25,8 @@ function StocksDisplay({stocks, deleteStock}) {
                         <th scope="col">Kaufpreis</th>
                         <th scope="col">Aktueller Preis</th>
                         <th scope="col">Aktuelle Rendite</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -28,9 +34,13 @@ function StocksDisplay({stocks, deleteStock}) {
                         return <tr key={index}>
                             <td key={"ticker"}>{stock.ticker}</td>
                             <td key={"companyName"}>{stock.companyName}</td>
-                            <td key={"currentPrice"}>{stock.currentPrice}</td>
-                            <td key={"priceBuy"}>{stock.priceBuy}</td>
-                            <td>{test((1 - stock.currentPrice / stock.priceBuy) * 100, stock)}</td>
+                            <td key={"currentPrice"}>{stock.priceBuy}</td>
+                            <td key={"priceBuy"}>{stock.currentPrice}</td>
+                            <td>{yieldInPercent((1 - stock.priceBuy / stock.currentPrice) * 100, stock)}</td>
+                            <td>
+                                <button className="btn btn-secondary btn-sm" onClick={ () => navigate(`/news?ticker=${stock.ticker}`)}>News
+                                </button>
+                            </td>
                             <td>
                                 <button className="btn btn-danger btn-sm" onClick={() => deleteStock(stock)}>Löschen
                                 </button>

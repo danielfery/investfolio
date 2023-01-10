@@ -8,6 +8,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {auth} from "./Firebase";
+import StocksNews from "./pages/StocksNews";
 
 function App() {
 
@@ -31,11 +32,12 @@ function App() {
             >
             <Navbar bg="secondary" variant="dark" sticky="top">
                 <Container>
-                    <Navbar.Brand>Investfolio</Navbar.Brand>
+                    <Navbar.Brand href="/">Investfolio</Navbar.Brand>
                     <Nav className="me-auto">
                         {!isAuth
                             ? <></>
                             : <>
+                                <Nav.Link href="/">Home</Nav.Link>
                                 <Nav.Link onClick={signUserOut}>Logout</Nav.Link>
                             </>
                         }
@@ -56,6 +58,7 @@ function App() {
                 <Route path="/" element={<Home isAuth={isAuth}></Home>}></Route>
                 {/* passing the state as a prop to the login component */}
                 <Route path="/login" element={<Login setIsAuth={setIsAuth}></Login>}></Route>
+                <Route path="/news" element={<StocksNews setIsAuth={setIsAuth}></StocksNews>}></Route>
             </Routes>
             </div>
         </Router>
